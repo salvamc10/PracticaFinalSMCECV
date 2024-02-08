@@ -1,0 +1,17 @@
+<!-- values/themes.xml -->
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Base.Theme.PracticaFinalSMCECV" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@android:color/black</item>
+        <!-- Otros atributos de estilo... -->
+    </style>
+
+    <!-- Estilo general para los botones en modo claro -->
+    <style name="ButtonStyle" parent="Widget.AppCompat.Button">
+        <!-- Ajusta cualquier otro atributo específico para el modo claro -->
+        <item name="android:background">@drawable/button_rounded</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">15dp</item>
+    </style>
+
+    <style name="Theme.PracticaFinalSMCECV" parent="Base.Theme.PracticaFinalSMCECV" />
+</resources>

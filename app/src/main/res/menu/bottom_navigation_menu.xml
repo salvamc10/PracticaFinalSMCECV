@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_home"
+        android:title="Home"
+        android:icon="@drawable/home"
+        android:iconTint="@color/white"/>
+    <item
+        android:id="@+id/navigation_eventos"
+        android:title="Eventos"
+        android:icon="@drawable/calendar"
+        android:iconTint="@color/white"/>
+    <item
+        android:id="@+id/navigation_configuracion"
+        android:title="Configuración"
+        android:icon="@drawable/settings"
+        android:iconTint="@color/white"/>
+    <item
+        android:id="@+id/navigation_perfil"
+        android:title="Perfil"
+        android:icon="@drawable/user"
+        android:iconTint="@color/white"/>
+</menu>
