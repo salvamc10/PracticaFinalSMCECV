@@ -16,11 +16,9 @@ class ConfiguracionActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         val sharedPref: SharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        val isDarkMode = sharedPref.getBoolean(DARK_MODE, false)
+        val isDarkMode = sharedPref.getBoolean(DARK_MODE, true) // por defecto es modo oscuro
         setAppTheme(isDarkMode)
-
         setContentView(R.layout.activity_configuracion)
         setupBottomNavigationView()
     }
@@ -32,26 +30,20 @@ class ConfiguracionActivity : AppCompatActivity() {
                 R.id.navigation_home -> navigateTo(HomeActivity::class.java)
                 R.id.navigation_eventos -> navigateTo(EventosActivity::class.java)
                 R.id.navigation_perfil -> navigateTo(PerfilActivity::class.java)
-                R.id.navigation_configuracion -> true
+                R.id.navigation_configuracion -> true // Actual página, no acción
                 else -> false
             }
         }
-        bottomNavigationView.selectedItemId = R.id.navigation_configuracion
-    }
-
-    private fun navigateTo(activityClass: Class<*>): Boolean {
-        startActivity(Intent(this, activityClass))
-        return true
+        bottomNavigationView.selectedItemId = R.id.navigation_configuracion // Establecer selección actual
     }
 
     fun toggleDarkMode(view: View) {
         val sharedPref: SharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        val isDarkMode = sharedPref.getBoolean(DARK_MODE, false)
+        val isDarkMode = sharedPref.getBoolean(DARK_MODE, true)
         with(sharedPref.edit()) {
             putBoolean(DARK_MODE, !isDarkMode)
             apply()
         }
-
         setAppTheme(!isDarkMode)
         recreate()
     }
@@ -63,4 +55,10 @@ class ConfiguracionActivity : AppCompatActivity() {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
     }
+
+    private fun navigateTo(activityClass: Class<*>): Boolean {
+        startActivity(Intent(this, activityClass))
+        return true
+    }
+
 }

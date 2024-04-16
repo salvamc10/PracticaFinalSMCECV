@@ -1,10 +1,11 @@
 package com.example.practicafinalsmcecv
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import android.widget.Button
+import androidx.appcompat.app.AppCompatDelegate
 
 class PerfilActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -12,16 +13,6 @@ class PerfilActivity : AppCompatActivity() {
         setContentView(R.layout.activity_perfil)
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-
-        val btnCerrarSesion = findViewById<Button>(R.id.btnCerrarSesion)
-        btnCerrarSesion.setOnClickListener {
-            clearEventosPreferences()
-
-            val intent = Intent(this, MainActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-        }
-
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_home -> {
@@ -41,15 +32,24 @@ class PerfilActivity : AppCompatActivity() {
                 }
                 else -> false
             }
-        }.also {
-            val menu = bottomNavigationView.menu
-            val menuItem = menu.findItem(R.id.navigation_perfil)
-            menuItem?.isChecked = true
+        }
+        bottomNavigationView.selectedItemId = R.id.navigation_perfil
+
+        val btnCerrarSesion = findViewById<Button>(R.id.btnCerrarSesion)
+        btnCerrarSesion.setOnClickListener {
+            clearPreferences()
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)  // Restablecer al modo claro
+            Intent(this, MainActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(this)
+            }
         }
     }
 
-    private fun clearEventosPreferences() {
-        val sharedPreferences = getSharedPreferences("EventosSharedPreferences", MODE_PRIVATE)
-        sharedPreferences.edit().clear().apply()
+    private fun clearPreferences() {
+        val eventosPrefs = getSharedPreferences("EventosSharedPreferences", MODE_PRIVATE)
+        eventosPrefs.edit().clear().apply()
+        val themePrefs = getSharedPreferences("MyPrefsFile", MODE_PRIVATE)
+        themePrefs.edit().putBoolean("dark_mode", false).apply()
     }
 }
