@@ -10,40 +10,46 @@ import android.content.Intent
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var userRepository: UserRepository
+    private lateinit var emailEditText: EditText
+    private lateinit var usernameEditText: EditText
+    private lateinit var passwordEditText: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
         userRepository = UserRepository(this)
+        emailEditText = findViewById(R.id.email)
+        usernameEditText = findViewById(R.id.usuario)
+        passwordEditText = findViewById(R.id.contraseña)
 
-        // En el RegisterActivity.kt para el botón de registro
-        val registerButton: Button = findViewById(R.id.botonRegister)
-        registerButton.setOnClickListener {
-            val email = findViewById<EditText>(R.id.email).text.toString()
-            val username = findViewById<EditText>(R.id.usuario).text.toString()
-            val password = findViewById<EditText>(R.id.contraseña).text.toString()
-
-            if (username.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()) {
-                if (userRepository.insertUser(username, email, password)) {
-                    Toast.makeText(this, "Usuario registrado con éxito", Toast.LENGTH_SHORT).show()
-
-                    // Crear un Intent para ir a la actividad de inicio de sesión
-                    val intent = Intent(this, MainActivity::class.java)
-
-                    // Limpiar la pila de actividades y comenzar la actividad de inicio de sesión
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(intent)
-
-                    // Cerrar la actividad de registro
-                    finish()
-                } else {
-                    Toast.makeText(this, "Error al registrar el usuario", Toast.LENGTH_SHORT).show()
-                }
-            } else {
-                Toast.makeText(this, "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show()
-            }
+        findViewById<Button>(R.id.botonRegister).setOnClickListener {
+            registerUser()
         }
+    }
 
+    private fun registerUser() {
+        val email = emailEditText.text.toString().trim()
+        val username = usernameEditText.text.toString().trim()
+        val password = passwordEditText.text.toString().trim()
+
+        if (validateInput(email, username, password)) {
+            if (userRepository.insertUser(username, email, password)) {
+                Toast.makeText(this, "Usuario registrado con éxito", Toast.LENGTH_SHORT).show()
+                Intent(this, MainActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(this)
+                }
+                finish()
+            } else {
+                Toast.makeText(this, "Error al registrar el usuario, puede que el nombre o email ya estén en uso", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Toast.makeText(this, "Por favor, asegúrese de que todos los campos están llenos y son válidos", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun validateInput(email: String, username: String, password: String): Boolean {
+        return username.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty() && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 }

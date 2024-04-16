@@ -12,47 +12,38 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        setupBottomNavigationView()
+        setupCardButtons()
+    }
 
+    private fun setupBottomNavigationView() {
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.navigation_home -> {
-                    true
-                }
-                R.id.navigation_eventos -> {
-                    startActivity(Intent(this, EventosActivity::class.java))
-                    true
-                }
-                R.id.navigation_configuracion -> {
-                    startActivity(Intent(this, ConfiguracionActivity::class.java))
-                    true
-                }
-                R.id.navigation_perfil -> {
-                    startActivity(Intent(this, PerfilActivity::class.java))
-                    true
-                }
+                R.id.navigation_home -> true
+                R.id.navigation_eventos -> navigateTo(EventosActivity::class.java)
+                R.id.navigation_configuracion -> navigateTo(ConfiguracionActivity::class.java)
+                R.id.navigation_perfil -> navigateTo(PerfilActivity::class.java)
                 else -> false
             }
         }
+    }
 
-        // Botón de la Tarjeta 1
-        findViewById<Button>(R.id.buttonP1).setOnClickListener {
-            startActivity(Intent(this, UcmActivity::class.java))
-        }
+    private fun setupCardButtons() {
+        setCardButton(R.id.buttonP1, UcmActivity::class.java)
+        setCardButton(R.id.buttonP2, RmuActivity::class.java)
+        setCardButton(R.id.buttonP3, CarActivity::class.java)
+        setCardButton(R.id.buttonP4, ElxActivity::class.java)
+    }
 
-        // Botón de la Tarjeta 2
-        findViewById<Button>(R.id.buttonP2).setOnClickListener {
-            startActivity(Intent(this, RmuActivity::class.java))
+    private fun setCardButton(buttonId: Int, activityClass: Class<*>) {
+        findViewById<Button>(buttonId).setOnClickListener {
+            startActivity(Intent(this, activityClass))
         }
+    }
 
-        // Botón de la Tarjeta 3
-        findViewById<Button>(R.id.buttonP3).setOnClickListener {
-            startActivity(Intent(this, CarActivity::class.java))
-        }
-
-        // Botón de la Tarjeta 4
-        findViewById<Button>(R.id.buttonP4).setOnClickListener {
-            startActivity(Intent(this, ElxActivity::class.java))
-        }
+    private fun navigateTo(activityClass: Class<*>): Boolean {
+        startActivity(Intent(this, activityClass))
+        return true
     }
 }

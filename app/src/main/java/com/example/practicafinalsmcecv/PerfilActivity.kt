@@ -13,14 +13,10 @@ class PerfilActivity : AppCompatActivity() {
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
 
-        // Obtener referencia al botón de "Cerrar sesión"
         val btnCerrarSesion = findViewById<Button>(R.id.btnCerrarSesion)
-
-        // Configurar el clic del botón de "Cerrar sesión"
         btnCerrarSesion.setOnClickListener {
-            // Limpiar cualquier estado de sesión, si es necesario
+            clearEventosPreferences()
 
-            // Iniciar la actividad principal (main activity) para iniciar sesión
             val intent = Intent(this, MainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
@@ -41,18 +37,19 @@ class PerfilActivity : AppCompatActivity() {
                     true
                 }
                 R.id.navigation_perfil -> {
-                    // No es necesario iniciar la misma actividad
                     true
                 }
                 else -> false
             }
         }.also {
-            // Obtener el menú y buscar el ítem correspondiente
             val menu = bottomNavigationView.menu
             val menuItem = menu.findItem(R.id.navigation_perfil)
-
-            // Establecer el ítem actual como seleccionado
             menuItem?.isChecked = true
         }
+    }
+
+    private fun clearEventosPreferences() {
+        val sharedPreferences = getSharedPreferences("EventosSharedPreferences", MODE_PRIVATE)
+        sharedPreferences.edit().clear().apply()
     }
 }

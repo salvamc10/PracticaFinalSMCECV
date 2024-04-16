@@ -17,31 +17,31 @@ class MainActivity : AppCompatActivity() {
 
         userRepository = UserRepository(this)
 
-        // En el MainActivity.kt para el botón de inicio de sesión
         val loginButton: Button = findViewById(R.id.botonLogin)
+        val registerButton: Button = findViewById(R.id.botonRegister)
+
         loginButton.setOnClickListener {
-            val username = findViewById<EditText>(R.id.usuario).text.toString()
-            val password = findViewById<EditText>(R.id.contraseña).text.toString()
-
-            if (username.isNotEmpty() && password.isNotEmpty()) {
-                if (userRepository.authenticateUser(username, password)) {
-                    Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show()
-
-                    // Agregar lógica para ir a la siguiente pantalla (ActivityEventos)
-                    val intent = Intent(this, HomeActivity::class.java)
-                    startActivity(intent)
-                } else {
-                    Toast.makeText(this, "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show()
-                }
-            } else {
-                Toast.makeText(this, "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show()
-            }
+            performLogin()
         }
 
-        val registerButton: Button = findViewById(R.id.botonRegister)
         registerButton.setOnClickListener {
-            val intent = Intent(this, RegisterActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, RegisterActivity::class.java))
+        }
+    }
+
+    private fun performLogin() {
+        val username = findViewById<EditText>(R.id.usuario).text.toString().trim()
+        val password = findViewById<EditText>(R.id.contraseña).text.toString().trim()
+
+        if (username.isNotEmpty() && password.isNotEmpty()) {
+            if (userRepository.authenticateUser(username, password)) {
+                Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this, HomeActivity::class.java))
+            } else {
+                Toast.makeText(this, "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Toast.makeText(this, "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show()
         }
     }
 }
