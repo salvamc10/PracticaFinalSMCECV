@@ -2,53 +2,47 @@ package com.example.practicafinalsmcecv
 
 import android.os.Bundle
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatDelegate
 
-class PerfilActivity : AppCompatActivity() {
+class PerfilActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_perfil)
+        setupBottomNavigationView()
 
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.navigation_home -> {
-                    startActivity(Intent(this, HomeActivity::class.java))
-                    true
-                }
-                R.id.navigation_eventos -> {
-                    startActivity(Intent(this, EventosActivity::class.java))
-                    true
-                }
-                R.id.navigation_configuracion -> {
-                    startActivity(Intent(this, ConfiguracionActivity::class.java))
-                    true
-                }
-                R.id.navigation_perfil -> {
-                    true
-                }
-                else -> false
-            }
-        }
-        bottomNavigationView.selectedItemId = R.id.navigation_perfil
+        // Obtener las vistas
+        val tvNombreUsuario = findViewById<TextView>(R.id.tvNombreUsuario)
+        val tvEmailUsuario = findViewById<TextView>(R.id.tvEmailUsuario)
+
+        // Cargar las preferencias
+        val prefs = getSharedPreferences("UserLoginPrefs", MODE_PRIVATE)
+        val username = prefs.getString("username", "No encontrado")
+        val email = prefs.getString("email", "No encontrado")
+
+        // Establecer los valores en los TextViews
+        tvNombreUsuario.text = username
+        tvEmailUsuario.text = email
 
         val btnCerrarSesion = findViewById<Button>(R.id.btnCerrarSesion)
         btnCerrarSesion.setOnClickListener {
             clearPreferences()
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)  // Restablecer al modo claro
-            Intent(this, MainActivity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(this)
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            Intent(this, MainActivity::class.java).also {
+                it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(it)
             }
         }
     }
 
+    override fun getCurrentNavItem(): Int {
+        return R.id.navigation_perfil
+    }
+
     private fun clearPreferences() {
-        val eventosPrefs = getSharedPreferences("EventosSharedPreferences", MODE_PRIVATE)
-        eventosPrefs.edit().clear().apply()
+        val prefs = getSharedPreferences("UserLoginPrefs", MODE_PRIVATE)
+        prefs.edit().clear().apply()
         val themePrefs = getSharedPreferences("MyPrefsFile", MODE_PRIVATE)
         themePrefs.edit().putBoolean("dark_mode", false).apply()
     }

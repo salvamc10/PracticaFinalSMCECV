@@ -5,6 +5,11 @@ import android.content.Context
 
 class UserRepository(context: Context) {
 
+    data class User(
+        val username: String,
+        val email: String
+    )
+
     private val dbHelper = DataBaseHelper(context)
     fun insertUser(username: String, email: String, password: String): Boolean {
         if (username.isEmpty() || email.isEmpty() || password.isEmpty()) return false
@@ -21,15 +26,22 @@ class UserRepository(context: Context) {
         }
     }
 
-    private fun isUsernameExists(username: String): Boolean {
+    fun getUserDetails(username: String): User? {
         val db = dbHelper.readableDatabase
-        val cursor = db.rawQuery("SELECT * FROM ${DataBaseHelper.TABLE_USERS} WHERE ${DataBaseHelper.COLUMN_USERNAME}=?", arrayOf(username))
-
-        val result = cursor.count > 0
+        val cursor = db.query(
+            DataBaseHelper.TABLE_USERS,
+            arrayOf(DataBaseHelper.COLUMN_USERNAME, DataBaseHelper.COLUMN_EMAIL),
+            "${DataBaseHelper.COLUMN_USERNAME}=?",
+            arrayOf(username),
+            null, null, null
+        )
+        if (cursor.moveToFirst()) {
+            val email = cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_EMAIL))
+            cursor.close()
+            return User(username, email)
+        }
         cursor.close()
-        db.close()
-
-        return result
+        return null
     }
 
     fun authenticateUser(username: String, password: String): Boolean {

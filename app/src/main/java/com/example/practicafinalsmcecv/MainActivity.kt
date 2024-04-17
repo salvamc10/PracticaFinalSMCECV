@@ -35,6 +35,15 @@ class MainActivity : AppCompatActivity() {
 
         if (username.isNotEmpty() && password.isNotEmpty()) {
             if (userRepository.authenticateUser(username, password)) {
+                val user = userRepository.getUserDetails(username)
+                user?.let {
+                    val prefs = getSharedPreferences("UserLoginPrefs", MODE_PRIVATE)
+                    with(prefs.edit()) {
+                        putString("username", user.username)
+                        putString("email", user.email)
+                        apply()
+                    }
+                }
                 Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this, HomeActivity::class.java))
             } else {

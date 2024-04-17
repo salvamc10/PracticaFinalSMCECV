@@ -3,30 +3,18 @@ package com.example.practicafinalsmcecv
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
-import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-
         setupBottomNavigationView()
         setupCardButtons()
     }
 
-    private fun setupBottomNavigationView() {
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.navigation_home -> true
-                R.id.navigation_eventos -> navigateTo(EventosActivity::class.java)
-                R.id.navigation_configuracion -> navigateTo(ConfiguracionActivity::class.java)
-                R.id.navigation_perfil -> navigateTo(PerfilActivity::class.java)
-                else -> false
-            }
-        }
+    override fun getCurrentNavItem(): Int {
+        return R.id.navigation_home
     }
 
     private fun setupCardButtons() {
@@ -40,10 +28,5 @@ class HomeActivity : AppCompatActivity() {
         findViewById<Button>(buttonId).setOnClickListener {
             startActivity(Intent(this, activityClass))
         }
-    }
-
-    private fun navigateTo(activityClass: Class<*>): Boolean {
-        startActivity(Intent(this, activityClass))
-        return true
     }
 }

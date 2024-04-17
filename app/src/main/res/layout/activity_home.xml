@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:background="#050a30">
 
-    <!-- Título -->
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
@@ -20,7 +19,6 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="50dp" />
 
-    <!-- ScrollView para permitir desplazamiento -->
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -33,7 +31,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <!-- Tarjeta 1 -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView1"
                 android:layout_width="0dp"
@@ -49,15 +46,11 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <!-- Contenido de la tarjeta 1 -->
-                <!-- ... (Contenido de la tarjeta) -->
-
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="16dp">
 
-                    <!-- Imagen a la izquierda -->
                     <ImageView
                         android:id="@+id/imageViewP1"
                         android:layout_width="120dp"
@@ -68,7 +61,6 @@
                         android:scaleType="centerCrop"
                         android:src="@drawable/ucam_marbella" />
 
-                    <!-- Texto a la derecha -->
                     <TextView
                         android:id="@+id/textView"
                         android:layout_width="wrap_content"
@@ -79,7 +71,6 @@
                         Marbella FC"
                         android:textSize="18sp" />
 
-                    <!-- Botón debajo del texto -->
                     <Button
                         android:id="@+id/buttonP1"
                         android:layout_width="match_parent"
@@ -95,7 +86,6 @@
 
             </androidx.cardview.widget.CardView>
 
-            <!-- Tarjeta 2 -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView2"
                 android:layout_width="0dp"
@@ -111,14 +101,11 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardView1">
 
-                <!-- Contenido de la tarjeta 2 -->
-                <!-- ... (Contenido de la tarjeta) -->
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="16dp">
 
-                    <!-- Imagen a la izquierda -->
                     <ImageView
                         android:id="@+id/imageViewP3"
                         android:layout_width="120dp"
@@ -128,7 +115,6 @@
                         android:scaleType="centerCrop"
                         android:src="@drawable/murcia_baleares" />
 
-                    <!-- Texto a la derecha -->
                     <TextView
                         android:id="@+id/textView"
                         android:layout_width="wrap_content"
@@ -139,7 +125,6 @@
                         At. Baleares"
                         android:textSize="18sp" />
 
-                    <!-- Botón debajo del texto -->
                     <Button
                         android:id="@+id/buttonP2"
                         style="@style/ButtonStyle"
@@ -155,7 +140,6 @@
 
             </androidx.cardview.widget.CardView>
 
-            <!-- Tarjeta 3 -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView3"
                 android:layout_width="0dp"
@@ -171,15 +155,11 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardView2">
 
-                <!-- Contenido de la tarjeta 3 -->
-                <!-- ... (Contenido de la tarjeta) -->
-
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="16dp">
 
-                    <!-- Imagen a la izquierda -->
                     <ImageView
                         android:id="@+id/imageViewP3"
                         android:layout_width="120dp"
@@ -189,7 +169,6 @@
                         android:scaleType="centerCrop"
                         android:src="@drawable/cartagena_villarreal" />
 
-                    <!-- Texto a la derecha -->
                     <TextView
                         android:id="@+id/textView"
                         android:layout_width="wrap_content"
@@ -200,7 +179,6 @@
                         Villarreal b"
                         android:textSize="18sp" />
 
-                    <!-- Botón debajo del texto -->
                     <Button
                         android:id="@+id/buttonP3"
                         style="@style/ButtonStyle"
@@ -216,7 +194,6 @@
 
             </androidx.cardview.widget.CardView>
 
-            <!-- Tarjeta 4 -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView4"
                 android:layout_width="0dp"
@@ -232,15 +209,11 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardView3">
 
-                <!-- Contenido de la tarjeta 4 -->
-                <!-- ... (Contenido de la tarjeta) -->
-
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="16dp">
 
-                    <!-- Imagen a la izquierda -->
                     <ImageView
                         android:id="@+id/imageViewP3"
                         android:layout_width="120dp"
@@ -250,7 +223,6 @@
                         android:scaleType="centerCrop"
                         android:src="@drawable/elche_valladolid" />
 
-                    <!-- Texto a la derecha -->
                     <TextView
                         android:id="@+id/textView"
                         android:layout_width="wrap_content"
@@ -261,7 +233,6 @@
                         Real Valladolid"
                         android:textSize="18sp" />
 
-                    <!-- Botón debajo del texto -->
                     <Button
                         android:id="@+id/buttonP4"
                         android:layout_width="match_parent"
@@ -277,12 +248,9 @@
 
             </androidx.cardview.widget.CardView>
 
-            <!-- Otro contenido o tarjetas pueden agregarse aquí -->
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
-    <!-- Menú fijo en la parte inferior -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="0dp"
