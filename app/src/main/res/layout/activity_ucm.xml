@@ -65,10 +65,22 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="32dp"
-                android:text="Añadir Evento"
+                style="@style/ButtonStyle"
+                android:text="Asistir al Evento"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/partidosTextView" />
+
+            <Button
+                android:id="@+id/shareEventButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                style="@style/ButtonStyle"
+                android:text="Compartir Evento"
+                app:layout_constraintEnd_toEndOf="@+id/addEventButton"
+                app:layout_constraintStart_toStartOf="@+id/addEventButton"
+                app:layout_constraintTop_toBottomOf="@+id/addEventButton" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

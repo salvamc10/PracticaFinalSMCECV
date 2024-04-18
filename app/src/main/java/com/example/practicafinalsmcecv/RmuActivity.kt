@@ -12,14 +12,19 @@ class RmuActivity : BaseActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_rmu)
         setupBottomNavigationView()
-
         val partidosTextView = findViewById<TextView>(R.id.partidosTextView)
         val partidosInfo = obtenerInformacionPartidos()
         val addEventButton = findViewById<Button>(R.id.addEventButton)
+        val shareEventButton = findViewById<Button>(R.id.shareEventButton)
 
         partidosTextView.text = partidosInfo
+
         addEventButton.setOnClickListener {
             agregarEvento()
+        }
+
+        shareEventButton.setOnClickListener {
+            compartirEvento(partidosInfo)
         }
     }
 
@@ -68,5 +73,15 @@ class RmuActivity : BaseActivity(){
         val competicion = "Primera RFEF - Grupo 2 - Jornada 20"
 
         return PartidoRepository.Partido(id, nombre, fecha, hora, estadio, competicion)
+    }
+
+    private fun compartirEvento(infoEvento: String) {
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, infoEvento)
+            type = "text/plain"
+        }
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        startActivity(shareIntent)
     }
 }

@@ -15,11 +15,16 @@ class UcmActivity : BaseActivity(){
         val partidosTextView = findViewById<TextView>(R.id.partidosTextView)
         val partidosInfo = obtenerInformacionPartidos()
         val addEventButton = findViewById<Button>(R.id.addEventButton)
+        val shareEventButton = findViewById<Button>(R.id.shareEventButton)
 
         partidosTextView.text = partidosInfo
 
         addEventButton.setOnClickListener {
             agregarEvento()
+        }
+
+        shareEventButton.setOnClickListener {
+            compartirEvento(partidosInfo)
         }
     }
 
@@ -68,5 +73,15 @@ class UcmActivity : BaseActivity(){
         val competicion = "Segunda RFEF - Grupo 4 - Jornada 18"
 
         return PartidoRepository.Partido(id, nombre, fecha, hora, estadio, competicion)
+    }
+
+    private fun compartirEvento(infoEvento: String) {
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, infoEvento)
+            type = "text/plain"
+        }
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        startActivity(shareIntent)
     }
 }

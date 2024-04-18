@@ -1,12 +1,10 @@
 package com.example.practicafinalsmcecv
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class CarActivity : BaseActivity(){
 
@@ -14,14 +12,19 @@ class CarActivity : BaseActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_car)
         setupBottomNavigationView()
-
         val partidosTextView = findViewById<TextView>(R.id.partidosTextView)
         val partidosInfo = obtenerInformacionPartidos()
         val addEventButton = findViewById<Button>(R.id.addEventButton)
+        val shareEventButton = findViewById<Button>(R.id.shareEventButton)
 
         partidosTextView.text = partidosInfo
+
         addEventButton.setOnClickListener {
             agregarEvento()
+        }
+
+        shareEventButton.setOnClickListener {
+            compartirEvento(partidosInfo)
         }
     }
 
@@ -70,5 +73,15 @@ class CarActivity : BaseActivity(){
         val competicion = "LaLiga Hypermotion - Jornada 22"
 
         return PartidoRepository.Partido(id, nombre, fecha, hora, estadio, competicion)
+    }
+
+    private fun compartirEvento(infoEvento: String) {
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, infoEvento)
+            type = "text/plain"
+        }
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        startActivity(shareIntent)
     }
 }
